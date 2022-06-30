@@ -124,8 +124,55 @@
                                     <td v-text="item.login.password"></td>
                                     <td v-text="item.email"></td>
                                     <td>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateusers">Update</button>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="`#${item.login.salt}`" @click="update(item)">Update</button>
                                         <button type="button" class="btn btn-danger">Delete</button>
+                                    </td>
+                                    <td>
+                                        <!-- modals -->
+                                        <section>
+                                            <div class="modal fade" :id="item.login.salt" tabindex="-1" aria-labelledby="updateusers" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">User Data</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form>
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">First Name</label>
+                                                                    <input type="text" class="form-control" v-model="mname">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Last Name</label>
+                                                                    <input type="text" class="form-control" v-model="mlastname">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Username</label>
+                                                                    <input type="text" class="form-control" v-model="musername">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Password</label>
+                                                                    <input type="password" class="form-control" placeholder="Password here" readonly :value="item.login.password" v-if="changepass == 0">
+                                                                    <button type="button" class="btn btn-primary mt-2 mb-2" v-if="changepass == 0" @click="enablepass">Change Password</button>
+                                                                    <input type="password" class="form-control" placeholder="New Password here" v-if="changepass == 1">
+                                                                    <button type="button" class="btn btn-danger mt-2 mb-2" v-if="changepass == 1" @click="disablepass">Cancel Change Pass</button>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Email</label>
+                                                                    <input type="text" class="form-control" placeholder="Email here" v-model="memail">
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary">Save</button>
+                                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <!-- /modals -->
                                     </td>
                                 </tr>
                             </tbody>
@@ -140,46 +187,6 @@
                 <!-- /users management -->
             </section>
             <!-- /users -->
-
-            <!-- modals -->
-            <section>
-                <div class="modal fade" id="updateusers" tabindex="-1" aria-labelledby="updateusers" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">User Data</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label">Name</label>
-                                        <input type="text" class="form-control" id="name" placeholder="Name here">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="username" class="form-label">Username</label>
-                                        <input type="text" class="form-control" id="username" placeholder="Username here" >
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="pass" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="pass" placeholder="Password here" readonly>
-                                        <button type="button" class="btn btn-primary mt-2">Change Password</button>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="text" class="form-control" id="email" placeholder="Email here">
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary">Save</button>
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- /modals -->
 
             <!-- FOOTER -->
             <footer id="footer" class="pb-4 pt-4">

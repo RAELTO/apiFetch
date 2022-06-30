@@ -9,7 +9,13 @@ var app = new Vue({
         passinput: '',
         pos: '',
         display: 0,
-
+        //modal info
+        mname: '',
+        mlastname: '',
+        musername: '',
+        mpass: '',
+        memail: '',
+        changepass: 0,
     },
     methods: {
         async listUsers(){
@@ -96,8 +102,26 @@ var app = new Vue({
                 this.display = 0;
             }
         },
-        update(){
+        update(item){
+            /*
+                mname: '',
+                musername: '',
+                mpass: '',
+                memail: '',
+            */
+
+            this.mname = item.name.first;
+            this.mlastname = item.name.last;
+            this.musername = item.login.username
+            this.memail = item.email;
             
+        },
+        enablepass(){
+            this.changepass = 1;
+        },
+        disablepass(){
+            this.changepass = 0;
+            this.mpass = '';
         },
         mensaje: function (msj, icono) {
             const Toast = Swal.mixin({
