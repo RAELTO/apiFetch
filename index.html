@@ -71,12 +71,12 @@
                     </div>
                     <div class="row">
                         <div class="col text-center mt-3">
-                            <button type="button" class="btn btn-success" v-if="displaycards == 1" @click="triggermanage"><strong>Show Users Management</strong></button>
+                            <button type="button" class="btn btn-success" v-if="display == 1" @click="triggermanage"><strong>Show Users Management</strong></button>
                             <button type="button" class="btn btn-primary" v-else @click="triggermanage"><strong>Hide Users Management</strong></button>
                         </div>
                     </div>
                     <!-- users cards -->
-                    <div class="row" v-if="newUsers.length && displaycards == 1">
+                    <div class="row" v-if="newUsers.length && display == 1">
                         <div class="col-md-6 col-lg-3 mt-3 mb-4" v-for="(item, index) in newUsers" :key="index">
                             <div class="card">
                                 <img :src="item.picture.large" class="card-img-top" alt="pr1">
@@ -100,7 +100,7 @@
                     <!-- /users cards -->
 
                     <!-- users management -->
-                    <div class="container mt-3 mb-3" v-if="displaycards == 0">
+                    <div class="container mt-3 mb-3" v-if="display == 0">
                         <h3 class="text-center"><strong>USERS MANAGEMENT</strong></h3>
                         <button type="button" class="btn btn-success mb-3">Add new user</button>
                         <div class="table-responsive">
@@ -118,7 +118,7 @@
                                 <tbody v-if="newUsers.length">
                                     <tr v-for="(item,index) in newUsers" :key="index" class="text-center">
                                         <td><img :src="item.picture.thumbnail" alt="profile img"></td>
-                                        <td v-text="item.name"></td>
+                                        <td v-text="`${item.name.first} ${item.name.last}`"></td>
                                         <td v-text="item.login.username"></td>
                                         <td v-text="item.login.password"></td>
                                         <td v-text="item.email"></td>

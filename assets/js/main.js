@@ -8,7 +8,8 @@ var app = new Vue({
         userinput: '',
         passinput: '',
         pos: '',
-        displaycards: 0,
+        display: 0,
+
     },
     methods: {
         async listUsers(){
@@ -89,11 +90,14 @@ var app = new Vue({
             })
         },
         triggermanage(){
-            if (this.displaycards == 0) {
-                this.displaycards = 1;
+            if (this.display == 0) {
+                this.display = 1;
             }else{
-                this.displaycards = 0;
+                this.display = 0;
             }
+        },
+        update(){
+            
         },
         mensaje: function (msj, icono) {
             const Toast = Swal.mixin({
