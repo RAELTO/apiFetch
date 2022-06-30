@@ -1,0 +1,98 @@
+/*START NAVBAR*/
+header{
+    z-index: 999;
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+
+#navbar{
+    background: linear-gradient(90deg, #4f87ef, #7bc3f9 25%, #4f87ef);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+}
+
+#navbar img{
+    width: 50px;
+    height: 50px;
+}
+
+#navbar .navbar-brand span{
+    border: 3px solid #fff;
+    color: #000;
+    font-weight: bold;
+}
+
+#navbar a{
+    color: #000;
+    font-weight: bold;
+}
+
+#navbar a:hover{
+    color: #fff;
+}
+/*END NAVBAR*/
+
+/*START USERS CARDS*/
+#users .menu-title{
+    color: #000;
+}
+
+#users hr{
+    color: #000;
+}
+
+#users .card{
+    background-color: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.09);
+    transition: 0.2s ease;
+}
+
+#users .card:hover{
+    box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.5);
+}
+
+#users .card span{
+    border: none;
+}
+
+#users .card-body p{
+    text-align: justify;
+}
+
+#users .card-footer{
+    color: #fff;
+    background-color: #000;
+}
+
+#users .card-footer img{
+    width: 60px;
+    height: 40px;
+    margin: auto;
+    display: flex;
+}
+/*END USERS CARDS*/
+
+/*START FOOTER*/
+#footer {
+    background: linear-gradient(90deg, #4f87ef, #7bc3f9 25%, #4f87ef);
+}
+
+#footer a, h6 {
+    text-decoration: none;
+    color: #000;
+}
+
+#footer h6 i{
+    font-size: 20px;
+}
+
+#footer a{
+    color: #000;
+}
+
+#footer a:hover{
+    color: #fff;
+}
+/*END FOOTER*/
