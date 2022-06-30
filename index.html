@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="./assets/css/styles.css">
     </head>
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         <div id="app">
             <!-- HEADER -->
             <header>
@@ -47,7 +47,7 @@
             </header>
             <!-- HEADER -->
 
-            <!-- products -->
+            <!-- users -->
             <section id="users" class="mt-4">
                 <div class="container">
                     <div class="row">
@@ -58,7 +58,7 @@
                     <div class="row"> <!--Filter -->
                         <div class="col-lg-6 col-md-4 text-center">
                             <h4>Filters</h4>
-                            <select class="form-select" v-model="foption" @change="filter">
+                            <select class="form-select">
                                 <option value="all">Show all</option>
                                 <option value="female">Female</option>
                                 <option value="male">Male</option>
@@ -66,11 +66,17 @@
                         </div>
                         <div class="col-lg-6 col-md-4 text-center mt-1">
                             <label for="exampleDataList" class="form-label">Search by first name</label>
-                            <input class="form-control" placeholder="Type to search..." v-model="soption" @change="search" @keyup="search">
+                            <input class="form-control" placeholder="Type to search...">
                         </div>
                     </div>
-                    <!-- products & modals-->
-                    <div class="row" v-if="newUsers.length">
+                    <div class="row">
+                        <div class="col text-center mt-3">
+                            <button type="button" class="btn btn-success" v-if="displaycards == 1" @click="triggermanage"><strong>Show Users Management</strong></button>
+                            <button type="button" class="btn btn-primary" v-else @click="triggermanage"><strong>Hide Users Management</strong></button>
+                        </div>
+                    </div>
+                    <!-- users cards -->
+                    <div class="row" v-if="newUsers.length && displaycards == 1">
                         <div class="col-md-6 col-lg-3 mt-3 mb-4" v-for="(item, index) in newUsers" :key="index">
                             <div class="card">
                                 <img :src="item.picture.large" class="card-img-top" alt="pr1">
@@ -91,10 +97,48 @@
                             <hr>
                         </div>
                     </div>
-                    <!-- /products -->
+                    <!-- /users cards -->
+
+                    <!-- users management -->
+                    <div class="container mt-3 mb-3" v-if="displaycards == 0">
+                        <h3 class="text-center"><strong>USERS MANAGEMENT</strong></h3>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover admintable">
+                                <thead>
+                                    <tr class="table-dark">
+                                        <th class="text-center">Img</th>
+                                        <th class="text-center">Name</th>
+                                        <th class="text-center">User</th>
+                                        <th class="text-center">Password</th>
+                                        <th class="text-center">Email</th>
+                                        <th class="text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody v-if="newUsers.length">
+                                    <tr v-for="(item,index) in newUsers" :key="index" class="text-center">
+                                        <td><img :src="item.picture.thumbnail" alt="profile img"></td>
+                                        <td v-text="item.name"></td>
+                                        <td v-text="item.login.username"></td>
+                                        <td v-text="item.login.password"></td>
+                                        <td v-text="item.email"></td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</button>
+                                            <button type="button" class="btn btn-danger">Delete</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-else>
+                                    <tr>
+                                        <td colspan="3">No existen usuarios</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /users management -->
                 </div>
             </section>
-            <!-- /products -->
+            <!-- /users -->
 
             <!-- FOOTER -->
             <footer id="footer" class="pb-4 pt-4">

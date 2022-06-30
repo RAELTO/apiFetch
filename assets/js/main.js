@@ -8,6 +8,7 @@ var app = new Vue({
         userinput: '',
         passinput: '',
         pos: '',
+        displaycards: 0,
     },
     methods: {
         async listUsers(){
@@ -29,7 +30,7 @@ var app = new Vue({
 
         },
         filter(){
-            if (this.foption === 'all') {
+            if (this.foption === 'all') {//TODO: solve the position bug and filter and search bug
                 this.newUsers = this.users;
                 this.updateLocalStorage();
             }else{
@@ -87,6 +88,13 @@ var app = new Vue({
                 }
             })
         },
+        triggermanage(){
+            if (this.displaycards == 0) {
+                this.displaycards = 1;
+            }else{
+                this.displaycards = 0;
+            }
+        },
         mensaje: function (msj, icono) {
             const Toast = Swal.mixin({
                 toast: true,
@@ -116,9 +124,12 @@ var app = new Vue({
         if (localStorage.getItem('users') !== null) {
             this.newUsers = JSON.parse(localStorage.getItem('users'));
             this.users = JSON.parse(localStorage.getItem('mainusers'));
-            this.pos = JSON.parse(localStorage.getItem('index'));
         }else{
             this.listUsers();
+        }
+        if (localStorage.getItem('index') !== null) {
+            this.pos = JSON.parse(localStorage.getItem('index'));
+        }else{
             this.pos = this.pos
         }
     },

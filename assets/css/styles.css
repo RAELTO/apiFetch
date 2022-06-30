@@ -151,9 +151,15 @@ header{
     margin: auto;
     display: flex;
 }
+
+#users .admintable img{
+    border-radius: 50%;
+    border: 2px solid #4f94ef;
+}
 /*END USERS CARDS*/
 
 /*START FOOTER*/
+
 #footer {
     background: linear-gradient(90deg, #4f87ef, #7bc3f9 25%, #4f87ef);
 }
