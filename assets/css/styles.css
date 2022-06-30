@@ -30,7 +30,77 @@ header{
 #navbar a:hover{
     color: #fff;
 }
+
+#navbar .logout:hover{
+    color: red;
+}
+
+#navbar .nav-item .profile{
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
 /*END NAVBAR*/
+
+/*START LOGIN*/
+.body2{
+    background: linear-gradient(90deg, #4f87ef, #7bdbf9 25%, #4fdfef);
+}
+
+#login .card-login{
+    background: rgba(0,0,0,0.15);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 10px;
+    text-align: center;
+}
+
+#login .card-login input[type="email"], input[type="password"]{
+    width: 80%;
+    margin: auto;
+}
+
+#login .card-header{
+    background-color: #191919;
+    font-weight: bold;
+    color: #fff;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#login .card-body form label{
+    font-size: 25px;
+    font-weight: bold;
+    color: #000;
+}
+
+#login .card-body form .form-text{
+    font-weight: bold;
+    color: #000;
+}
+
+#login .card-body form .logbtn{
+    margin: auto;
+    border: 0;
+    transition: 0.4s all ease;
+    font-weight: bold;
+}
+
+#login .card-body form .logbtn:hover{
+    background-color: #fff;
+    color: #000;
+}
+
+
+#login .logcontainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+/*END LOGIN*/
 
 /*START USERS CARDS*/
 #users .menu-title{
@@ -59,6 +129,15 @@ header{
 
 #users .card-body p{
     text-align: justify;
+}
+
+#users .card-body h5{
+    font-weight: bold;
+    color: #0a3991;
+}
+
+#users .card-body span{
+    color: #000;
 }
 
 #users .card-footer{
