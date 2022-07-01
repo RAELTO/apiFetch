@@ -117,21 +117,21 @@
                             </thead>
                             <tbody v-if="newUsers.length">
                                 <tr v-for="(item,index) in newUsers" :key="index" class="text-center">
-                                    <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#adduser">Add new user</button>
+                                    <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#adduser"><i class="fa-solid fa-plus"></i><i class="fa-solid fa-user"></i></button>
                                     <td><img :src="item.picture.thumbnail" alt="profile img"></td>
                                     <td v-text="`${item.name.first} ${item.name.last}`"></td>
                                     <td v-text="item.login.username"></td>
                                     <td><input type="password" readonly :value="item.login.password" class="form-control"></td>
                                     <td v-text="item.email"></td>
                                     <td>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateusers" @click="update(index)">Update</button>
-                                        <button type="button" class="btn btn-danger" @click="delUser(index)">Delete</button>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateusers" @click="update(index)">Update <i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button type="button" class="btn btn-danger" @click="delUser(index)"><i class="fa-solid fa-trash-can"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
                             <tbody v-else>
                                 <tr>
-                                    <td colspan="3">No existen usuarios</td>
+                                    <td colspan="3">Users not found</td>
                                 </tr>
                             </tbody>
                         </table>
