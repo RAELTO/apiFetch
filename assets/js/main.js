@@ -311,7 +311,7 @@ var app = new Vue({
             .then(response => response.json())
             .then(result => this.from = result.symbols)
             .catch(error => console.log('error', error));
-            this.from = Object.keys(this.from);
+            this.from = Object.entries(this.from);
             this.to = this.from;
             this.updateLocalStorage();
 

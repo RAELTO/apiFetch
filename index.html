@@ -278,7 +278,7 @@
                                             <form class="text-start">
                                                 <label class="form-label">From</label>
                                                 <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" v-model="cfrom">
-                                                    <option :value="item" v-for="(item,index) in from" :key="index" v-text="item">opt1</option>
+                                                    <option :value="item[0]" v-for="(item,index) in from" :key="index" v-text="item[1]">opt1</option>
                                                 </select>
                                             </form>
                                         </div>
@@ -286,7 +286,7 @@
                                             <form class="text-start">
                                                 <label class="form-label">To</label>
                                                 <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" v-model="cto">
-                                                    <option value="" :value="item" v-for="(item,index) in to" :key="index" v-text="item">Opt1</option>
+                                                    <option :value="item[0]" v-for="(item,index) in to" :key="index" v-text="item[1]">Opt1</option>
                                                 </select>
                                             </form>
                                         </div>
@@ -294,7 +294,10 @@
                                     <div class="row">
                                         <div class="col-lg-6 mt-3 mb-3">
                                             <label class="form-label text-center">Amount</label>
-                                            <input type="number" class="form-control" v-model="amount">
+                                            <div class="input-group mb-3">
+                                                <input type="number" class="form-control" aria-describedby="basic-addon2" v-model="amount">
+                                                <button type="button" class="btn btn-success" @click="convert">Go</button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -306,7 +309,6 @@
                             </section>
                         </div>
                         <div class="modal-footer">
-                        <button type="button" class="btn btn-success" @click="convert">Exchange</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="closeconverter">Cancel</button>
                         </div>
                     </div>
