@@ -32,7 +32,7 @@
                                     <a class="nav-link active" aria-current="page" href="index.html">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link logout" aria-current="page" href="#" @click="logout">Cerrar Sesión <i class="fa-solid fa-right-from-bracket"></i></a>
+                                    <a class="nav-link logout" aria-current="page" href="#" @click="logout">Logout <i class="fa-solid fa-right-from-bracket"></i></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" aria-current="page">Welcome: <span v-text="`${newUsers[pos].name.first} ${newUsers[pos].name.last}`" class="text-light"></span></a>
@@ -117,7 +117,7 @@
                             </thead>
                             <tbody v-if="newUsers.length">
                                 <tr v-for="(item,index) in newUsers" :key="index" class="text-center">
-                                    <button type="button" class="btn btn-success mb-3">Add new user</button>
+                                    <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#adduser">Add new user</button>
                                     <td><img :src="item.picture.thumbnail" alt="profile img"></td>
                                     <td v-text="`${item.name.first} ${item.name.last}`"></td>
                                     <td v-text="item.login.username"></td>
@@ -125,7 +125,7 @@
                                     <td v-text="item.email"></td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateusers" @click="update(index)">Update</button>
-                                        <button type="button" class="btn btn-danger">Delete</button>
+                                        <button type="button" class="btn btn-danger" @click="delUser(index)">Delete</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -189,7 +189,69 @@
                 <!-- /update user -->
 
                 <!-- add user -->
-                    
+                <div class="modal fade" id="adduser" tabindex="-1" aria-labelledby="adduser" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">User Data Form</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="text-start">
+                                    <label class="form-label">Gender</label>
+                                    <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example">
+                                        <option value="female">Female</option>
+                                        <option value="male">Male</option>
+                                    </select>
+                                    <div class="mb-3">
+                                        <label class="form-label">First Name</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Last Name</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Username</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="mb-3 text-center">
+                                        <label class="form-label">Password</label>
+                                        <input type="password" class="form-control" placeholder="Password here">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="text" class="form-control" placeholder="Email here">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">City</label>
+                                        <input type="text" class="form-control" placeholder="City here">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Cell</label>
+                                        <input type="text" class="form-control" placeholder="Cellphone number here">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Age</label>
+                                        <input type="number" class="form-control" placeholder="Age here">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Country</label>
+                                        <input type="text" class="form-control" placeholder="Country here">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Nationality</label>
+                                        <input type="text" class="form-control" placeholder="Nationality here">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Add User</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- /add user -->
             </section>
             <!-- /modals -->

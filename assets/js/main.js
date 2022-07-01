@@ -153,6 +153,36 @@ var app = new Vue({
             this.newpass = '';
             this.oldpass = '';
         },
+        delUser(index){
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })       
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "This is a permanent action!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Delete',
+                cancelButtonText: 'No, Cancel',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.newUsers.splice(index, 1);
+                    this.updateLocalStorage();
+                    this.mensaje("User deleted successfully", "success");
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                }
+            });
+        },
+        addUser(){
+            //TODO
+        },
         mensaje: function (msj, icono) {
             const Toast = Swal.mixin({
                 toast: true,
