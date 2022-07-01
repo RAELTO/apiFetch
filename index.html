@@ -33,10 +33,10 @@
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Dropdown
+                                        Menu
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" href="#">Action</a></li>
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exchange">Exchange Rates</a></li>
                                         <li><a class="dropdown-item" href="#">Another action</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item" href="#">Something else here</a></li>
@@ -261,6 +261,59 @@
                     </div>
                 </div>
                 <!-- /add user -->
+
+                <!-- exchange -->
+                <div class="modal fade" id="exchange" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><strong>Exchange Rates</strong></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeconverter"></button>
+                        </div>
+                        <div class="modal-body">
+                            <section id="converter" class="mt-3 mb-3">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-5">
+                                            <form class="text-start">
+                                                <label class="form-label">From</label>
+                                                <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" v-model="cfrom">
+                                                    <option :value="item" v-for="(item,index) in from" :key="index" v-text="item">opt1</option>
+                                                </select>
+                                            </form>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <form class="text-start">
+                                                <label class="form-label">To</label>
+                                                <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" v-model="cto">
+                                                    <option value="" :value="item" v-for="(item,index) in to" :key="index" v-text="item">Opt1</option>
+                                                </select>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 mt-3 mb-3">
+                                            <label class="form-label text-center">Amount</label>
+                                            <input type="number" class="form-control" v-model="amount">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h1><strong>Total: <span v-text="total"></span></strong></h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-success" @click="convert">Exchange</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="closeconverter">Cancel</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!-- /exchange -->
+
             </section>
             <!-- /modals -->
 

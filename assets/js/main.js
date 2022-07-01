@@ -3,6 +3,14 @@ var app = new Vue({
     data: {
         users: [],
         newUsers: [],
+        from: [],
+        //converter variables
+        to: [],
+        cfrom: '',
+        cto: '',
+        amount: 0,
+        total: 0,
+        //end converter variables
         foption: '',
         soption: '',
         userinput: '',
@@ -289,6 +297,58 @@ var app = new Vue({
                 }
             ];
         },
+        async listmoneyData(){
+            const myHeaders = new Headers();
+            myHeaders.append("apikey", "OW4FXAHusDCuPsOFi6zHL5hjTMXuPKlw");
+
+            const requestOptions = {
+            method: 'GET',
+            redirect: 'follow',
+            headers: myHeaders
+            };
+
+            await fetch("https://api.apilayer.com/exchangerates_data/symbols", requestOptions)
+            .then(response => response.json())
+            .then(result => this.from = result.symbols)
+            .catch(error => console.log('error', error));
+            this.from = Object.keys(this.from);
+            this.to = this.from;
+            this.updateLocalStorage();
+
+        },
+        async convert(){
+
+            if (this.from.length > 0 && this.to.length > 0 && this.amount > 0) {
+
+                const myHeaders = new Headers();
+                myHeaders.append("apikey", "OW4FXAHusDCuPsOFi6zHL5hjTMXuPKlw");
+
+
+                const requestOptions = {
+                    method: 'GET',
+                    redirect: 'follow',
+                    headers: myHeaders
+                };
+    
+                let totalc
+    
+                await fetch(`https://api.apilayer.com/exchangerates_data/convert?to=${this.cto}&from=${this.cfrom}&amount=${this.amount}`, requestOptions)
+                    .then(response => response.json())
+                    .then(result => totalc = result)
+                    .catch(error => console.log('error', error));
+                
+                this.total = totalc.result;
+            }else{
+                this.mensaje("Please fill every field and the amount cannot be zero", "error");
+            }
+
+        },
+        closeconverter(){
+            this.cto = '';
+            this.cfrom = '';
+            this.amount = 0;
+            this.total = 0;
+        },
         mensaje: function (msj, icono) {
             const Toast = Swal.mixin({
                 toast: true,
@@ -311,6 +371,8 @@ var app = new Vue({
             localStorage.setItem('users', JSON.stringify(this.newUsers));
             localStorage.setItem('mainusers', JSON.stringify(this.users));
             localStorage.setItem('index', JSON.stringify(this.pos));
+            localStorage.setItem('from', JSON.stringify(this.from));
+            localStorage.setItem('to', JSON.stringify(this.to));
         },
         
     },
@@ -326,6 +388,12 @@ var app = new Vue({
             this.pos = JSON.parse(localStorage.getItem('index'));
         }else{
             this.pos = this.pos
+        }
+        if (localStorage.getItem('from') !== null) {
+            this.from = JSON.parse(localStorage.getItem('from'));
+            this.to = JSON.parse(localStorage.getItem('to'));
+        }else{
+            this.listmoneyData();
         }
     },
 });

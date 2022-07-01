@@ -39,6 +39,12 @@ header{
     border-radius: 50%;
     border: 2px solid #fff;
 }
+
+#navbar .dropdown-menu a:hover{
+    color: #4f87ef;
+    cursor: pointer;
+}
+
 /*END NAVBAR*/
 
 /*START LOGIN*/
