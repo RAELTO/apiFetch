@@ -17,6 +17,8 @@ var app = new Vue({
         oldpass: '',
         memail: '',
         changepass: 0,
+        updindex: '',
+        actualpass: '',
     },
     methods: {
         async listUsers(){
@@ -103,23 +105,25 @@ var app = new Vue({
                 this.display = 0;
             }
         },
-        update(item){
-            this.mname = item.name.first;
-            this.mlastname = item.name.last;
-            this.musername = item.login.username
-            this.memail = item.email;
+        update(index){
+            this.updindex = index;
+            this.mname = this.newUsers[index].name.first;
+            this.mlastname = this.newUsers[index].name.last;
+            this.musername = this.newUsers[index].login.username;
+            this.memail = this.newUsers[index].email;
+            this.actualpass = this.newUsers[index].login.password;
         },
-        saveUpdate(item){
+        saveUpdate(index){
             if (this.mname.length > 0 && this.mlastname.length > 0 
                 && this.musername.length > 0 && this.memail.length > 0) {
                 if (this.changepass === 1) {
-                    if (this.oldpass === item.login.password) {
+                    if (this.oldpass === this.newUsers[this.updindex].login.password) {
                         if (this.newpass.length >= 8) {
-                            item.login.password = this.newpass;
-                            item.name.first= this.mname;
-                            item.name.last = this.mlastname;
-                            item.login.username = this.musername;
-                            item.email = this.memail;
+                            this.newUsers[this.updindex].login.password = this.newpass;
+                            this.newUsers[this.updindex].name.first= this.mname;
+                            this.newUsers[this.updindex].name.last = this.mlastname;
+                            this.newUsers[this.updindex].login.username = this.musername;
+                            this.newUsers[this.updindex].email = this.memail;
                             this.disablepass();
                             this.updateLocalStorage();
                             this.mensaje("Changes have been made", "success");
@@ -130,10 +134,10 @@ var app = new Vue({
                         this.mensaje("Old password do not match with actual password", "error");
                     }
                 }else{
-                    item.name.first= this.mname;
-                    item.name.last = this.mlastname;
-                    item.login.username = this.musername;
-                    item.email = this.memail;
+                    this.newUsers[index].name.first= this.mname;
+                    this.newUsers[index].name.last = this.mlastname;
+                    this.newUsers[index].login.username = this.musername;
+                    this.newUsers[index].email = this.memail;
                     this.updateLocalStorage();
                     this.mensaje("Changes have been made", "success");
                 }
