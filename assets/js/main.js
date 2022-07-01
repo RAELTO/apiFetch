@@ -13,7 +13,8 @@ var app = new Vue({
         mname: '',
         mlastname: '',
         musername: '',
-        mpass: '',
+        newpass: '',
+        oldpass: '',
         memail: '',
         changepass: 0,
     },
@@ -54,7 +55,7 @@ var app = new Vue({
                     return object.login.username == this.userinput;
                 });
     
-                if(index != -1 && this.passinput === this.users[index].login.password){
+                if(index != -1 && this.passinput === this.newUsers[index].login.password){
                     this.pos = index;
                     this.updateLocalStorage();
                     this.mensaje("Login success", "success");
@@ -103,25 +104,50 @@ var app = new Vue({
             }
         },
         update(item){
-            /*
-                mname: '',
-                musername: '',
-                mpass: '',
-                memail: '',
-            */
-
             this.mname = item.name.first;
             this.mlastname = item.name.last;
             this.musername = item.login.username
             this.memail = item.email;
-            
+        },
+        saveUpdate(item){
+            if (this.mname.length > 0 && this.mlastname.length > 0 
+                && this.musername.length > 0 && this.memail.length > 0) {
+                if (this.changepass === 1) {
+                    if (this.oldpass === item.login.password) {
+                        if (this.newpass.length >= 8) {
+                            item.login.password = this.newpass;
+                            item.name.first= this.mname;
+                            item.name.last = this.mlastname;
+                            item.login.username = this.musername;
+                            item.email = this.memail;
+                            this.disablepass();
+                            this.updateLocalStorage();
+                            this.mensaje("Changes have been made", "success");
+                        }else{
+                            this.mensaje("The new password must have at least 8 characters", "error");
+                        }
+                    }else{
+                        this.mensaje("Passwords do not match", "error");
+                    }
+                }else{
+                    item.name.first= this.mname;
+                    item.name.last = this.mlastname;
+                    item.login.username = this.musername;
+                    item.email = this.memail;
+                    this.updateLocalStorage();
+                    this.mensaje("Changes have been made", "success");
+                }
+            }else{
+                this.mensaje("Please fill every field", "error");
+            }
         },
         enablepass(){
             this.changepass = 1;
         },
         disablepass(){
             this.changepass = 0;
-            this.mpass = '';
+            this.newpass = '';
+            this.oldpass = '';
         },
         mensaje: function (msj, icono) {
             const Toast = Swal.mixin({

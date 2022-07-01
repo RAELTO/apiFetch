@@ -103,7 +103,6 @@
                 <!-- users management -->
                 <div class="container mt-3 mb-3" v-if="display == 0">
                     <h3 class="text-center"><strong>USERS MANAGEMENT</strong></h3>
-                    <button type="button" class="btn btn-success mb-3">Add new user</button>
                     <div class="table-responsive">
                         <table class="table table-striped table-hover admintable">
                             <thead>
@@ -113,24 +112,26 @@
                                     <th class="text-center">User</th>
                                     <th class="text-center">Password</th>
                                     <th class="text-center">Email</th>
-                                    <th class="text-center">Acciones</th>
+                                    <th class="text-center">Actions</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody v-if="newUsers.length">
                                 <tr v-for="(item,index) in newUsers" :key="index" class="text-center">
+                                    <button type="button" class="btn btn-success mb-3">Add new user</button>
                                     <td><img :src="item.picture.thumbnail" alt="profile img"></td>
                                     <td v-text="`${item.name.first} ${item.name.last}`"></td>
                                     <td v-text="item.login.username"></td>
-                                    <td v-text="item.login.password"></td>
+                                    <td><input type="password" readonly :value="item.login.password" class="form-control"></td>
                                     <td v-text="item.email"></td>
                                     <td>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="`#${item.login.salt}`" @click="update(item)">Update</button>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="`#${item.name.first}`" @click="update(item)">Update</button>
                                         <button type="button" class="btn btn-danger">Delete</button>
                                     </td>
                                     <td>
                                         <!-- modals -->
                                         <section>
-                                            <div class="modal fade" :id="item.login.salt" tabindex="-1" aria-labelledby="updateusers" aria-hidden="true">
+                                            <div class="modal fade" :id="item.name.first" tabindex="-1" aria-labelledby="updateusers" aria-hidden="true" data-bs-backdrop="static">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -155,7 +156,8 @@
                                                                     <label class="form-label">Password</label>
                                                                     <input type="password" class="form-control" placeholder="Password here" readonly :value="item.login.password" v-if="changepass == 0">
                                                                     <button type="button" class="btn btn-primary mt-2 mb-2" v-if="changepass == 0" @click="enablepass">Change Password</button>
-                                                                    <input type="password" class="form-control" placeholder="New Password here" v-if="changepass == 1">
+                                                                    <input type="password" class="form-control mt-2 mb-2" placeholder="Old Password here" v-if="changepass == 1" v-model="oldpass">
+                                                                    <input type="password" class="form-control mt-2 mb-2" placeholder="New Password here" v-if="changepass == 1" v-model="newpass">
                                                                     <button type="button" class="btn btn-danger mt-2 mb-2" v-if="changepass == 1" @click="disablepass">Cancel Change Pass</button>
                                                                 </div>
                                                                 <div class="mb-3">
@@ -165,7 +167,7 @@
                                                             </form>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-primary">Save</button>
+                                                            <button type="button" class="btn btn-primary" @click="saveUpdate(item)">Save</button>
                                                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
                                                         </div>
                                                     </div>
