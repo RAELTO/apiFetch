@@ -127,7 +127,7 @@ var app = new Vue({
                             this.mensaje("The new password must have at least 8 characters", "error");
                         }
                     }else{
-                        this.mensaje("Passwords do not match", "error");
+                        this.mensaje("Old password do not match with actual password", "error");
                     }
                 }else{
                     item.name.first= this.mname;
