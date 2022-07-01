@@ -14,6 +14,7 @@ var app = new Vue({
         mlastname: '',
         musername: '',
         newpass: '',
+        newpass2: '',
         oldpass: '',
         memail: '',
         changepass: 0,
@@ -141,14 +142,18 @@ var app = new Vue({
                 if (this.changepass === 1) {
                     if (this.oldpass === this.newUsers[this.updindex].login.password) {
                         if (this.newpass.length >= 8) {
-                            this.newUsers[this.updindex].login.password = this.newpass;
-                            this.newUsers[this.updindex].name.first= this.mname;
-                            this.newUsers[this.updindex].name.last = this.mlastname;
-                            this.newUsers[this.updindex].login.username = this.musername;
-                            this.newUsers[this.updindex].email = this.memail;
-                            this.disablepass();
-                            this.updateLocalStorage();
-                            this.mensaje("Changes have been made", "success");
+                            if (this.newpass === this.newpass2) {
+                                this.newUsers[this.updindex].login.password = this.newpass;
+                                this.newUsers[this.updindex].name.first= this.mname;
+                                this.newUsers[this.updindex].name.last = this.mlastname;
+                                this.newUsers[this.updindex].login.username = this.musername;
+                                this.newUsers[this.updindex].email = this.memail;
+                                this.disablepass();
+                                this.updateLocalStorage();
+                                this.mensaje("Changes have been made", "success");
+                            }else{
+                                this.mensaje("Both new passwords doesn't match", "error");
+                            }
                         }else{
                             this.mensaje("The new password must have at least 8 characters", "error");
                         }

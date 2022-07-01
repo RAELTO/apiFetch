@@ -171,6 +171,7 @@
                                         <button type="button" class="btn btn-primary mt-2 mb-2" v-if="changepass == 0" @click="enablepass">Change Password</button>
                                         <input type="password" class="form-control mt-2 mb-2" placeholder="Old Password here" v-if="changepass == 1" v-model="oldpass">
                                         <input type="password" class="form-control mt-2 mb-2" placeholder="New Password here" v-if="changepass == 1" v-model="newpass">
+                                        <input type="password" class="form-control mt-2 mb-2" placeholder="Confirm new password" v-if="changepass == 1" v-model="newpass2">
                                         <button type="button" class="btn btn-danger mt-2 mb-2" v-if="changepass == 1" @click="disablepass">Cancel Pass Change</button>
                                     </div>
                                     <div class="mb-3">
