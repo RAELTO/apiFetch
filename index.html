@@ -199,54 +199,50 @@
                             <div class="modal-body">
                                 <form class="text-start">
                                     <label class="form-label">Gender</label>
-                                    <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example">
+                                    <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" v-model="newUser[0].gender">
                                         <option value="female">Female</option>
                                         <option value="male">Male</option>
                                     </select>
                                     <div class="mb-3">
                                         <label class="form-label">First Name</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" v-model="newUser[0].name.first">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Last Name</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" v-model="newUser[0].name.last">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Username</label>
-                                        <input type="text" class="form-control">
+                                        <input type="text" class="form-control" v-model="newUser[0].login.username">
                                     </div>
                                     <div class="mb-3 text-center">
                                         <label class="form-label">Password</label>
-                                        <input type="password" class="form-control" placeholder="Password here">
+                                        <input type="password" minlength="8" class="form-control" placeholder="Password here" v-model="newUser[0].login.password">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Email</label>
-                                        <input type="text" class="form-control" placeholder="Email here">
+                                        <input type="email" class="form-control" placeholder="Email here" v-model="newUser[0].email">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">City</label>
-                                        <input type="text" class="form-control" placeholder="City here">
+                                        <input type="text" class="form-control" placeholder="City here" v-model="newUser[0].location.city">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Cell</label>
-                                        <input type="text" class="form-control" placeholder="Cellphone number here">
+                                        <input type="text" class="form-control" placeholder="Cellphone number here" v-model="newUser[0].cell">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Age</label>
-                                        <input type="number" class="form-control" placeholder="Age here">
+                                        <input type="number" class="form-control" placeholder="Age here" v-model="newUser[0].dob.age">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Country</label>
-                                        <input type="text" class="form-control" placeholder="Country here">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Nationality</label>
-                                        <input type="text" class="form-control" placeholder="Nationality here">
+                                        <input type="text" class="form-control" placeholder="Country here" v-model="newUser[0].location.country">
                                     </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary">Add User</button>
+                                <button type="button" class="btn btn-primary" @click="addUser">Add User</button>
                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
                             </div>
                         </div>

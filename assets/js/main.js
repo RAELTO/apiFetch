@@ -19,6 +19,28 @@ var app = new Vue({
         changepass: 0,
         updindex: '',
         actualpass: '',
+        newUser: [
+            {
+                gender: '',
+                name: {
+                    first: '',
+                    last: ''
+                },
+                email: '',
+                location: {
+                    city: '',
+                    country: '',
+                },
+                login: {
+                    username: '',
+                    password: '',
+                },
+                dob: {
+                    age: '',
+                },
+                cell: ''
+            }
+        ],
     },
     methods: {
         async listUsers(){
@@ -53,7 +75,7 @@ var app = new Vue({
         },
         login(){
             if (this.userinput.length > 0 && this.passinput.length > 0) {
-                const index = this.users.findIndex((object) => {
+                const index = this.newUsers.findIndex((object) => {
                     return object.login.username == this.userinput;
                 });
     
@@ -181,7 +203,86 @@ var app = new Vue({
             });
         },
         addUser(){
-            //TODO
+            if (
+                this.newUser[0].gender.length > 0 && this.newUser[0].name.first.length > 0 && this.newUser[0].name.last.length > 0 &&
+                this.newUser[0].location.city.length > 0 && this.newUser[0].location.country.length > 0 && this.newUser[0].login.username.length > 0
+                && this.newUser[0].login.password.length > 0 && this.newUser[0].dob.age > 0 && this.newUser[0].cell.length > 0
+                ) {
+                    
+                    function random(min, max) {
+                        return Math.floor((Math.random() * (max - min + 1)) + min);
+                    }
+                    const randomimg = random(1, 100);
+                    let gender
+                    switch (this.newUser[0].gender) {//convert the user gender in order to be compatible with the picture endpoint from API
+                        case "male":
+                            gender = 'men';
+                            break;
+                        
+                        case "female":
+                            gender = 'women';
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    this.newUsers.push({
+                        gender: this.newUser[0].gender,
+                        name: {
+                            first: this.newUser[0].name.first,
+                            last: this.newUser[0].name.last
+                        },
+                        location: {
+                            city: this.newUser[0].location.city,
+                            country: this.newUser[0].location.country
+                        },
+                        email: this.newUser[0].email,
+                        login: {
+                            username: this.newUser[0].login.username,
+                            password: this.newUser[0].login.password,
+                        },
+                        dob: {
+                            age: this.newUser[0].dob.age,
+                        },
+                        cell: this.newUser[0].cell,
+                        picture: {
+                            large: `https://randomuser.me/api/portraits/${gender}/${randomimg}.jpg`,
+                            thumbnail: `https://randomuser.me/api/portraits/thumb/${gender}/${randomimg}.jpg`
+                        },
+                        nat: this.newUser[0].location.country,
+                        flag: `https://countryflagsapi.com/png/${this.newUser[0].location.country}`
+                    });
+                    this.updateLocalStorage();
+                    this.resetfields();//reset the fields for newUser array
+                    this.mensaje("The user was successfully created", "success");
+
+            }else{
+                this.mensaje("Please fill every field", "error");
+            }
+        },
+        resetfields(){
+            this.newUser = [
+                {
+                    gender: '',
+                    name: {
+                        first: '',
+                        last: ''
+                    },
+                    location: {
+                        city: '',
+                        country: '',
+                    },
+                    login: {
+                        username: '',
+                        password: '',
+                    },
+                    dob: {
+                        age: '',
+                    },
+                    cell: ''
+                }
+            ];
         },
         mensaje: function (msj, icono) {
             const Toast = Swal.mixin({
@@ -214,6 +315,7 @@ var app = new Vue({
             this.users = JSON.parse(localStorage.getItem('mainusers'));
         }else{
             this.listUsers();
+            this.users = this.users;
         }
         if (localStorage.getItem('index') !== null) {
             this.pos = JSON.parse(localStorage.getItem('index'));
