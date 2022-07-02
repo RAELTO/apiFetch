@@ -45,6 +45,10 @@ header{
     cursor: pointer;
 }
 
+#navbar .navbar-nav .msg:hover{
+    color: #000;
+}
+
 /*END NAVBAR*/
 
 /*START LOGIN*/
@@ -107,6 +111,21 @@ header{
     min-height: 100vh;
 }
 /*END LOGIN*/
+
+/*START ERROR 401*/
+#app2 .notvalid{
+    font-weight: bold;
+    font-size: 50px;
+}
+
+#app2 .container{
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+/*END ERROR 401*/
 
 /*START USERS CARDS*/
 #users .menu-title{

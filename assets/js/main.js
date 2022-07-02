@@ -3,19 +3,11 @@ var app = new Vue({
     data: {
         users: [],
         newUsers: [],
-        from: [],
-        //converter variables
-        to: [],
-        cfrom: '',
-        cto: '',
-        amount: 0,
-        total: 0,
-        //end converter variables
+        usession: [],//stores user session profile
         foption: '',
         soption: '',
         userinput: '',
         passinput: '',
-        pos: '',
         display: 0,
         //modal info
         mname: '',
@@ -50,6 +42,14 @@ var app = new Vue({
                 cell: ''
             }
         ],
+        //converter variables
+        from: [],
+        to: [],
+        cfrom: '',
+        cto: '',
+        amount: 0,
+        total: 0,
+        //end converter variables
     },
     methods: {
         async listUsers(){
@@ -66,7 +66,7 @@ var app = new Vue({
             });
 
             this.newUsers = this.users;
-
+            this.usession = [];
             this.updateLocalStorage();
 
         },
@@ -87,9 +87,9 @@ var app = new Vue({
                 const index = this.newUsers.findIndex((object) => {
                     return object.login.username == this.userinput;
                 });
-    
+                console.log(this.usession.length);
                 if(index != -1 && this.passinput === this.newUsers[index].login.password){
-                    this.pos = index;
+                    this.usession.push({...this.newUsers[index]});//inserts the object into the empty array
                     this.updateLocalStorage();
                     this.mensaje("Login success", "success");
 
@@ -119,8 +119,8 @@ var app = new Vue({
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.pos = '';
-                    this.updateLocalStorage();
+                    /*this.usession = [];
+                    this.updateLocalStorage();*/
                     this.mensaje("Successfully logged out", "success");
                     setTimeout(function(){ location.href = "login.html" }, 1500);
                 } else if (
@@ -370,7 +370,7 @@ var app = new Vue({
         updateLocalStorage(){
             localStorage.setItem('users', JSON.stringify(this.newUsers));
             localStorage.setItem('mainusers', JSON.stringify(this.users));
-            localStorage.setItem('index', JSON.stringify(this.pos));
+            localStorage.setItem('usession', JSON.stringify(this.usession));
             localStorage.setItem('from', JSON.stringify(this.from));
             localStorage.setItem('to', JSON.stringify(this.to));
         },
@@ -384,10 +384,10 @@ var app = new Vue({
             this.listUsers();
             this.users = this.users;
         }
-        if (localStorage.getItem('index') !== null) {
-            this.pos = JSON.parse(localStorage.getItem('index'));
+        if (localStorage.getItem('usession') !== null) {
+            this.usession = JSON.parse(localStorage.getItem('usession'));
         }else{
-            this.pos = this.pos
+            this.usession = this.usession
         }
         if (localStorage.getItem('from') !== null) {
             this.from = JSON.parse(localStorage.getItem('from'));
