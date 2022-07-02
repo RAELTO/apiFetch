@@ -66,7 +66,6 @@ var app = new Vue({
             });
 
             this.newUsers = this.users;
-            this.usession = [];
             this.updateLocalStorage();
 
         },
@@ -119,8 +118,8 @@ var app = new Vue({
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    /*this.usession = [];
-                    this.updateLocalStorage();*/
+                    this.usession = [];
+                    this.updateLocalStorage();
                     this.mensaje("Successfully logged out", "success");
                     setTimeout(function(){ location.href = "login.html" }, 1500);
                 } else if (
@@ -387,7 +386,7 @@ var app = new Vue({
         if (localStorage.getItem('usession') !== null) {
             this.usession = JSON.parse(localStorage.getItem('usession'));
         }else{
-            this.usession = this.usession
+            this.usession = [];
         }
         if (localStorage.getItem('from') !== null) {
             this.from = JSON.parse(localStorage.getItem('from'));
