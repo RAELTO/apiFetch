@@ -14,348 +14,344 @@
         <link rel="stylesheet" href="./assets/css/styles.css">
     </head>
     <body class="d-flex flex-column min-vh-100">
-        <div id="app" v-if="usession.length">
-            <!-- HEADER -->
-            <header>
-                <nav id="navbar" class="navbar navbar-expand-lg bg-light navbar-light">
-                    <div class="container">
-                        <a class="navbar-brand" href="index.html">
-                            <!-- <img src="./assets/images/logo.png" alt="logo"> -->
-                            <span>Users</span>
-                        </a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Menu
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exchange">Exchange Rates</a></li>
-                                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link logout" aria-current="page" href="#" @click="logout">Logout <i class="fa-solid fa-right-from-bracket"></i></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link msg" aria-current="page">Welcome: <span v-text="`${usession[0].name.first} ${usession[0].name.last}`" class="text-light"></span></a>
-                                </li>
-                                <li class="nav-item">
-                                    <img :src="usession[0].picture.thumbnail" class="profile" alt="pr1">
-                                </li>
-                            </ul>
+        <div id="app">
+            <div v-if="usession.length">
+                <!-- HEADER -->
+                <header>
+                    <nav id="navbar" class="navbar navbar-expand-lg bg-light navbar-light">
+                        <div class="container">
+                            <a class="navbar-brand" href="index.html">
+                                <!-- <img src="./assets/images/logo.png" alt="logo"> -->
+                                <span>Users</span>
+                            </a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Menu
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exchange">Exchange Rates</a></li>
+                                            <li><a class="dropdown-item" href="#" v-if="display == 1" @click="triggermanage">Show Users Management</a></li>
+                                            <li><a class="dropdown-item" href="#" v-if="display == 0" @click="triggermanage">Show Users Cards</a></li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link logout" aria-current="page" href="#" @click="logout">Logout <i class="fa-solid fa-right-from-bracket"></i></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link msg" aria-current="page">Welcome: <span v-text="`${usession[0].name.first} ${usession[0].name.last}`" class="text-light"></span></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <img :src="usession[0].picture.thumbnail" class="profile" alt="pr1">
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                </nav>
-            </header>
-            <!-- HEADER -->
+                    </nav>
+                </header>
+                <!-- HEADER -->
 
-            <div class="row">
-                <div class="col text-center mt-3 mb-3">
-                    <button type="button" class="btn btn-success" v-if="display == 1" @click="triggermanage"><strong>Show Users Management</strong></button>
-                    <button type="button" class="btn btn-primary" v-else @click="triggermanage"><strong>Hide Users Management</strong></button>
-                </div>
-            </div>
-
-            <!-- users -->
-            <section id="users" class="mt-4">
-                <div class="container" v-if="display == 1">
-                    <div class="row">
-                        <div class="col text-center text-uppercase">
-                            <h1 class="menu-title">Users List</h1>
+                <!-- users -->
+                <section id="users" class="mt-4">
+                    <div class="container" v-if="display == 1">
+                        <div class="row">
+                            <div class="col text-center text-uppercase">
+                                <h1 class="menu-title">Users List</h1>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row"> <!--Filter -->
-                        <div class="col-lg-6 col-md-4 text-center">
-                            <h4>Filters</h4>
-                            <select class="form-select">
-                                <option value="all">Show all</option>
-                                <option value="female">Female</option>
-                                <option value="male">Male</option>
-                            </select>
+                        <div class="row"> <!--Filter -->
+                            <div class="col-lg-6 col-md-4 text-center">
+                                <h4>Filters</h4>
+                                <select class="form-select">
+                                    <option value="all">Show all</option>
+                                    <option value="female">Female</option>
+                                    <option value="male">Male</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6 col-md-4 text-center mt-1">
+                                <label for="exampleDataList" class="form-label">Search by first name</label>
+                                <input class="form-control" placeholder="Type to search...">
+                            </div>
                         </div>
-                        <div class="col-lg-6 col-md-4 text-center mt-1">
-                            <label for="exampleDataList" class="form-label">Search by first name</label>
-                            <input class="form-control" placeholder="Type to search...">
-                        </div>
-                    </div>
-                    <!-- users cards -->
-                    <div class="row" v-if="newUsers.length">
-                        <div class="col-md-6 col-lg-3 mt-3 mb-4" v-for="(item, index) in newUsers" :key="index">
-                            <div class="card">
-                                <img :src="item.picture.large" class="card-img-top" alt="pr1">
-                                <div class="card-body">
-                                    <h5 class="card-title">Gender: <span v-text="item.gender"></span></h5>
-                                    <h5 class="card-title">Name: <span v-text="`${item.name.first} ${item.name.last}`"></span></h5>
-                                    <h5 class="card-title">City: <span v-text="item.location.city"></span></h5>
-                                    <h5 class="card-title">Cell: <span v-text="item.cell"></span></h5>
-                                    <h5 class="card-title">Age: <span v-text="item.dob.age"></span></h5>
-                                    <h5 class="card-title">Country: <span v-text="item.location.country"></span></h5>
-                                    <h5 class="card-title">Nationality: <span v-text="item.nat"></span></h5>
+                        <!-- users cards -->
+                        <div class="row" v-if="newUsers.length">
+                            <div class="col-md-6 col-lg-3 mt-3 mb-4" v-for="(item, index) in newUsers" :key="index">
+                                <div class="card">
+                                    <img :src="item.picture.large" class="card-img-top" alt="pr1">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Gender: <span v-text="item.gender"></span></h5>
+                                        <h5 class="card-title">Name: <span v-text="`${item.name.first} ${item.name.last}`"></span></h5>
+                                        <h5 class="card-title">City: <span v-text="item.location.city"></span></h5>
+                                        <h5 class="card-title">Cell: <span v-text="item.cell"></span></h5>
+                                        <h5 class="card-title">Age: <span v-text="item.dob.age"></span></h5>
+                                        <h5 class="card-title">Country: <span v-text="item.location.country"></span></h5>
+                                        <h5 class="card-title">Nationality: <span v-text="item.nat"></span></h5>
+                                    </div>
+                                    <div class="card-footer">
+                                        <h5>Flag: </h5>
+                                        <img :src="item.flag" alt="flag">
+                                    </div>
                                 </div>
-                                <div class="card-footer">
-                                    <h5>Flag: </h5>
-                                    <img :src="item.flag" alt="flag">
+                                <hr>
+                            </div>
+                        </div>
+                        <!-- /users cards -->
+                    </div>
+                    <!-- users management -->
+                    <div class="container mt-3 mb-3" v-if="display == 0">
+                        <h3 class="text-center"><strong>USERS MANAGEMENT</strong></h3>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover admintable">
+                                <thead>
+                                    <tr class="table-dark">
+                                        <th class="text-center">Img</th>
+                                        <th class="text-center">Name</th>
+                                        <th class="text-center">User</th>
+                                        <th class="text-center">Password</th>
+                                        <th class="text-center">Email</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody v-if="newUsers.length">
+                                    <tr v-for="(item,index) in newUsers" :key="index" class="text-center">
+                                        <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#adduser"><i class="fa-solid fa-plus"></i><i class="fa-solid fa-user"></i></button>
+                                        <td><img :src="item.picture.thumbnail" alt="profile img"></td>
+                                        <td v-text="`${item.name.first} ${item.name.last}`"></td>
+                                        <td v-text="item.login.username"></td>
+                                        <td><input type="password" readonly :value="item.login.password" class="form-control"></td>
+                                        <td v-text="item.email"></td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateusers" @click="update(index)">Update <i class="fa-solid fa-pen-to-square"></i></button>
+                                            <button type="button" class="btn btn-danger" @click="delUser(index)"><i class="fa-solid fa-trash-can"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-else>
+                                    <tr>
+                                        <td colspan="3">Users not found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /users management -->
+                </section>
+                <!-- /users -->
+
+                <!-- modals -->
+                <section>
+                    <!-- update user -->
+                    <div class="modal fade" id="updateusers" tabindex="-1" aria-labelledby="updateusers" aria-hidden="true" data-bs-backdrop="static">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">User Data</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="text-start">
+                                        <div class="mb-3">
+                                            <label class="form-label">First Name</label>
+                                            <input type="text" class="form-control" v-model="mname">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Last Name</label>
+                                            <input type="text" class="form-control" v-model="mlastname">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Username</label>
+                                            <input type="text" class="form-control" v-model="musername">
+                                        </div>
+                                        <div class="mb-3 text-center">
+                                            <label class="form-label">Password</label>
+                                            <input type="password" class="form-control" placeholder="Password here" v-model="actualpass" readonly v-if="changepass == 0">
+                                            <button type="button" class="btn btn-primary mt-2 mb-2" v-if="changepass == 0" @click="enablepass">Change Password</button>
+                                            <input type="password" class="form-control mt-2 mb-2" placeholder="Old Password here" v-if="changepass == 1" v-model="oldpass">
+                                            <input type="password" class="form-control mt-2 mb-2" placeholder="New Password here" v-if="changepass == 1" v-model="newpass">
+                                            <input type="password" class="form-control mt-2 mb-2" placeholder="Confirm new password" v-if="changepass == 1" v-model="newpass2">
+                                            <button type="button" class="btn btn-danger mt-2 mb-2" v-if="changepass == 1" @click="disablepass">Cancel Pass Change</button>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Email</label>
+                                            <input type="text" class="form-control" placeholder="Email here" v-model="memail">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" @click="saveUpdate(updindex)">Save</button>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
                                 </div>
                             </div>
-                            <hr>
                         </div>
                     </div>
-                    <!-- /users cards -->
-                </div>
-                <!-- users management -->
-                <div class="container mt-3 mb-3" v-if="display == 0">
-                    <h3 class="text-center"><strong>USERS MANAGEMENT</strong></h3>
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover admintable">
-                            <thead>
-                                <tr class="table-dark">
-                                    <th class="text-center">Img</th>
-                                    <th class="text-center">Name</th>
-                                    <th class="text-center">User</th>
-                                    <th class="text-center">Password</th>
-                                    <th class="text-center">Email</th>
-                                    <th class="text-center">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody v-if="newUsers.length">
-                                <tr v-for="(item,index) in newUsers" :key="index" class="text-center">
-                                    <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#adduser"><i class="fa-solid fa-plus"></i><i class="fa-solid fa-user"></i></button>
-                                    <td><img :src="item.picture.thumbnail" alt="profile img"></td>
-                                    <td v-text="`${item.name.first} ${item.name.last}`"></td>
-                                    <td v-text="item.login.username"></td>
-                                    <td><input type="password" readonly :value="item.login.password" class="form-control"></td>
-                                    <td v-text="item.email"></td>
-                                    <td>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateusers" @click="update(index)">Update <i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button type="button" class="btn btn-danger" @click="delUser(index)"><i class="fa-solid fa-trash-can"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tbody v-else>
-                                <tr>
-                                    <td colspan="3">Users not found</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- /users management -->
-            </section>
-            <!-- /users -->
+                    <!-- /update user -->
 
-            <!-- modals -->
-            <section>
-                <!-- update user -->
-                <div class="modal fade" id="updateusers" tabindex="-1" aria-labelledby="updateusers" aria-hidden="true" data-bs-backdrop="static">
-                    <div class="modal-dialog modal-lg">
+                    <!-- add user -->
+                    <div class="modal fade" id="adduser" tabindex="-1" aria-labelledby="adduser" aria-hidden="true" data-bs-backdrop="static">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">User Data Form</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="text-start">
+                                        <label class="form-label">Gender</label>
+                                        <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" v-model="newUser[0].gender">
+                                            <option value="female">Female</option>
+                                            <option value="male">Male</option>
+                                        </select>
+                                        <div class="mb-3">
+                                            <label class="form-label">First Name</label>
+                                            <input type="text" class="form-control" v-model="newUser[0].name.first">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Last Name</label>
+                                            <input type="text" class="form-control" v-model="newUser[0].name.last">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Username</label>
+                                            <input type="text" class="form-control" v-model="newUser[0].login.username">
+                                        </div>
+                                        <div class="mb-3 text-center">
+                                            <label class="form-label">Password</label>
+                                            <input type="password" minlength="8" class="form-control" placeholder="Password here" v-model="newUser[0].login.password">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" class="form-control" placeholder="Email here" v-model="newUser[0].email">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">City</label>
+                                            <input type="text" class="form-control" placeholder="City here" v-model="newUser[0].location.city">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Cell</label>
+                                            <input type="text" class="form-control" placeholder="Cellphone number here" v-model="newUser[0].cell">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Age</label>
+                                            <input type="number" class="form-control" placeholder="Age here" v-model="newUser[0].dob.age">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Country</label>
+                                            <input type="text" class="form-control" placeholder="Country here" v-model="newUser[0].location.country">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" @click="addUser">Add User</button>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /add user -->
+
+                    <!-- exchange -->
+                    <div class="modal fade" id="exchange" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                        <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">User Data</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h5 class="modal-title" id="exampleModalLabel"><strong>Exchange Rates</strong></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeconverter"></button>
                             </div>
                             <div class="modal-body">
-                                <form class="text-start">
-                                    <div class="mb-3">
-                                        <label class="form-label">First Name</label>
-                                        <input type="text" class="form-control" v-model="mname">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Last Name</label>
-                                        <input type="text" class="form-control" v-model="mlastname">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Username</label>
-                                        <input type="text" class="form-control" v-model="musername">
-                                    </div>
-                                    <div class="mb-3 text-center">
-                                        <label class="form-label">Password</label>
-                                        <input type="password" class="form-control" placeholder="Password here" v-model="actualpass" readonly v-if="changepass == 0">
-                                        <button type="button" class="btn btn-primary mt-2 mb-2" v-if="changepass == 0" @click="enablepass">Change Password</button>
-                                        <input type="password" class="form-control mt-2 mb-2" placeholder="Old Password here" v-if="changepass == 1" v-model="oldpass">
-                                        <input type="password" class="form-control mt-2 mb-2" placeholder="New Password here" v-if="changepass == 1" v-model="newpass">
-                                        <input type="password" class="form-control mt-2 mb-2" placeholder="Confirm new password" v-if="changepass == 1" v-model="newpass2">
-                                        <button type="button" class="btn btn-danger mt-2 mb-2" v-if="changepass == 1" @click="disablepass">Cancel Pass Change</button>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Email</label>
-                                        <input type="text" class="form-control" placeholder="Email here" v-model="memail">
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" @click="saveUpdate(updindex)">Save</button>
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /update user -->
-
-                <!-- add user -->
-                <div class="modal fade" id="adduser" tabindex="-1" aria-labelledby="adduser" aria-hidden="true" data-bs-backdrop="static">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">User Data Form</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form class="text-start">
-                                    <label class="form-label">Gender</label>
-                                    <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" v-model="newUser[0].gender">
-                                        <option value="female">Female</option>
-                                        <option value="male">Male</option>
-                                    </select>
-                                    <div class="mb-3">
-                                        <label class="form-label">First Name</label>
-                                        <input type="text" class="form-control" v-model="newUser[0].name.first">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Last Name</label>
-                                        <input type="text" class="form-control" v-model="newUser[0].name.last">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Username</label>
-                                        <input type="text" class="form-control" v-model="newUser[0].login.username">
-                                    </div>
-                                    <div class="mb-3 text-center">
-                                        <label class="form-label">Password</label>
-                                        <input type="password" minlength="8" class="form-control" placeholder="Password here" v-model="newUser[0].login.password">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Email</label>
-                                        <input type="email" class="form-control" placeholder="Email here" v-model="newUser[0].email">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">City</label>
-                                        <input type="text" class="form-control" placeholder="City here" v-model="newUser[0].location.city">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Cell</label>
-                                        <input type="text" class="form-control" placeholder="Cellphone number here" v-model="newUser[0].cell">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Age</label>
-                                        <input type="number" class="form-control" placeholder="Age here" v-model="newUser[0].dob.age">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Country</label>
-                                        <input type="text" class="form-control" placeholder="Country here" v-model="newUser[0].location.country">
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" @click="addUser">Add User</button>
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /add user -->
-
-                <!-- exchange -->
-                <div class="modal fade" id="exchange" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
-                    <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"><strong>Exchange Rates</strong></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeconverter"></button>
-                        </div>
-                        <div class="modal-body">
-                            <section id="converter" class="mt-3 mb-3">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-lg-5">
-                                            <form class="text-start">
-                                                <label class="form-label">From</label>
-                                                <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" v-model="cfrom">
-                                                    <option :value="item[0]" v-for="(item,index) in from" :key="index" v-text="item[1]">opt1</option>
-                                                </select>
-                                            </form>
+                                <section id="converter" class="mt-3 mb-3">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-5">
+                                                <form class="text-start">
+                                                    <label class="form-label">From</label>
+                                                    <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" v-model="cfrom">
+                                                        <option :value="item[0]" v-for="(item,index) in from" :key="index" v-text="item[1]">opt1</option>
+                                                    </select>
+                                                </form>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <form class="text-start">
+                                                    <label class="form-label">To</label>
+                                                    <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" v-model="cto">
+                                                        <option :value="item[0]" v-for="(item,index) in to" :key="index" v-text="item[1]">Opt1</option>
+                                                    </select>
+                                                </form>
+                                            </div>
                                         </div>
-                                        <div class="col-lg-5">
-                                            <form class="text-start">
-                                                <label class="form-label">To</label>
-                                                <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" v-model="cto">
-                                                    <option :value="item[0]" v-for="(item,index) in to" :key="index" v-text="item[1]">Opt1</option>
-                                                </select>
-                                            </form>
+                                        <div class="row">
+                                            <div class="col-lg-6 mt-3 mb-3">
+                                                <label class="form-label text-center">Amount</label>
+                                                <div class="input-group mb-3">
+                                                    <input type="number" class="form-control" aria-describedby="basic-addon2" v-model="amount">
+                                                    <button type="button" class="btn btn-success" @click="convert">Go</button>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6 mt-3 mb-3">
-                                            <label class="form-label text-center">Amount</label>
-                                            <div class="input-group mb-3">
-                                                <input type="number" class="form-control" aria-describedby="basic-addon2" v-model="amount">
-                                                <button type="button" class="btn btn-success" @click="convert">Go</button>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <h1><strong>Total: <span v-text="total"></span></strong></h1>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <h1><strong>Total: <span v-text="total"></span></strong></h1>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
+                                </section>
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="closeconverter">Cancel</button>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="closeconverter">Cancel</button>
                         </div>
                     </div>
+                    <!-- /exchange -->
+
+                </section>
+                <!-- /modals -->
+
+                <!-- FOOTER -->
+                <footer id="footer" class="pb-4 pt-4">
+                    <div class="container">
+                        <div class="row text-center">
+                            <div class="col-12 col-lg col-md">
+                                <a href="#">FAQ</a>
+                            </div>
+                            <div class="col-12 col-lg col-md">
+                                <a href="#">Contact</a>
+                            </div>
+                            <div class="col-12 col-lg col-md">
+                                <a href="#">Novedades</a>
+                            </div>
+                            <div class="col-12 col-lg col-md">
+                                <a href="#">Privacy</a>
+                            </div>
+                            <div class="col-12 col-lg col-md">
+                                <h6 class="text-center mt-2 mb-2">
+                                    Follow us: 
+                                    <a href="#"><i class="fab fa-instagram-square"></i></a>
+                                    <a href="#"><i class="fab fa-facebook-square"></i></a>
+                                </h6>
+                            </div>
+                        </div>
+                        <h6 class="text-center mt-4">© Copyright - All rights reserved</h6>
+                        <h6 class="text-center mt-4">Elias Toro</h6>
                     </div>
-                </div>
-                <!-- /exchange -->
-
-            </section>
-            <!-- /modals -->
-
-            <!-- FOOTER -->
-            <footer id="footer" class="pb-4 pt-4">
+                </footer>
+                <!-- /FOOTER -->
+            </div>
+            <div id="app2" v-else>
                 <div class="container">
-                    <div class="row text-center">
-                        <div class="col-12 col-lg col-md">
-                            <a href="#">FAQ</a>
-                        </div>
-                        <div class="col-12 col-lg col-md">
-                            <a href="#">Contact</a>
-                        </div>
-                        <div class="col-12 col-lg col-md">
-                            <a href="#">Novedades</a>
-                        </div>
-                        <div class="col-12 col-lg col-md">
-                            <a href="#">Privacy</a>
-                        </div>
-                        <div class="col-12 col-lg col-md">
-                            <h6 class="text-center mt-2 mb-2">
-                                Follow us: 
-                                <a href="#"><i class="fab fa-instagram-square"></i></a>
-                                <a href="#"><i class="fab fa-facebook-square"></i></a>
-                            </h6>
-                        </div>
+                    <div class="row">
+                        <dov class="col notvaltext">
+                            <h1 class="text-center notvalid">ERROR 401</h1>
+                            <h1 class="text-center notvalid">UNAUTHORIZED</h1>
+                        </dov>
                     </div>
-                    <h6 class="text-center mt-4">© Copyright - All rights reserved</h6>
-                    <h6 class="text-center mt-4">Elias Toro</h6>
-                </div>
-            </footer>
-            <!-- /FOOTER -->
-        </div>
-        <div id="app2" v-else>
-            <div class="container">
-                <div class="row">
-                    <dov class="col notvaltext">
-                        <h1 class="text-center notvalid">ERROR 401</h1>
-                        <h1 class="text-center notvalid">UNAUTHORIZED</h1>
-                    </dov>
                 </div>
             </div>
         </div>
